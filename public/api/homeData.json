@@ -1,0 +1,57 @@
+{
+    "state":1,
+    "data":{
+        "swiperPic":[
+            "http://upload.jianshu.io/admin_banners/web_images/4688/988b811a134c1ef20dfd44fcc9138e673272a547.png?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540",
+            "http://upload.jianshu.io/admin_banners/web_images/4691/6dcca4d07939d5d4c77b3dcc270001e304e08997.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540",
+            "http://upload.jianshu.io/admin_banners/web_images/4680/f3832b8ec185f3772a31960a2494964132f29ce0.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540"
+        ],
+        "isShow":false,    
+        "articleList":[{
+            "title":"Sportcastr | 1个月薅1万美金教程",
+            "content":"Sportcastr近期正式推出网页应用，录直播就可以获得Fanz奖励，据说月浏览量9的视频博主竟然获得了近万元的奖励，这个活动推出后，后台不时...",
+            "imgUrl":"",
+            "id": 1
+        },
+        {
+            "title":"Sportcastr | 1个月薅2万美金教程",
+            "content":"Sportcastr近期正式推出网页应用，录直播就可以获得Fanz奖励，据说月浏览量9的视频博主竟然获得了近万元的奖励，这个活动推出后，后台不时...",
+            "imgUrl":"http://upload-images.jianshu.io/upload_images/11929545-b665d75ce8a535c7?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240",
+            "id": 2
+        },
+        {
+            "title":"Sportcastr | 1个月薅3万美金教程",
+            "content":"Sportcastr近期正式推出网页应用，录直播就可以获得Fanz奖励，据说月浏览量9的视频博主竟然获得了近万元的奖励，这个活动推出后，后台不时...",
+            "imgUrl":"http://upload-images.jianshu.io/upload_images/11929545-b665d75ce8a535c7?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240",
+            "id": 3
+            }],
+        "recommend":[
+            "http://cdn2.jianshu.io/assets/web/banner-s-club-aa8bdf19f8cf729a759da42e4a96f366.png",
+            "http://cdn2.jianshu.io/assets/web/banner-s-7-1a0222c91694a1f38e610be4bf9669be.png",
+            "http://cdn2.jianshu.io/assets/web/banner-s-5-4ba25cf5041931a0ed2062828b4064cb.png",
+            "http://cdn2.jianshu.io/assets/web/banner-s-6-c4d6335bfd688f2ca1115b42b04c28a7.png"
+        ],
+        "writer":[
+            {   "personUrl":"/u/40ec0e1adf50?utm_source=desktop&amp;utm_medium=index-users",
+                "picUrl":"//upload.jianshu.io/users/upload_avatars/4263857/34d7b217-7338-48fe-81a1-98367fecdbee.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+                "name":"王小麦",
+                "wordCount":103.4,
+                "likeCount":40.1
+            },
+            {   "personUrl":"/u/40ec0e1adf50?utm_source=desktop&amp;utm_medium=index-users",
+                "picUrl":"//upload.jianshu.io/users/upload_avatars/4263857/34d7b217-7338-48fe-81a1-98367fecdbee.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+                "name":"王小麦",
+                "wordCount":103.4,
+                "likeCount":40.1
+            },
+            {   "personUrl":"/u/40ec0e1adf50?utm_source=desktop&amp;utm_medium=index-users",
+                "picUrl":"//upload.jianshu.io/users/upload_avatars/4263857/34d7b217-7338-48fe-81a1-98367fecdbee.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp",
+                "name":"王小麦",
+                "wordCount":103.4,
+                "likeCount":40.1
+            }
+        ]
+    
+    }
+    
+}
