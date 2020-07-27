@@ -9,11 +9,12 @@ export const HeaderWrapper  = styled.div`
 export const Logo = styled.div`
     height:56px;
     position:absolute;
-    top:0;left:0;
+    top:0;left:20px;
     display:block;
     width:100px;
     background-image:url(${logoPic});
-    background-size:100px 56px;
+    background-size:340px;
+    background-repeat:no-repeat
 `;
 export const Nav = styled.div`
   position:relative;
@@ -32,6 +33,9 @@ export const Nav = styled.div`
   }
   .slide-exit-active {
     width:240px
+  }
+  a {
+    text-decoration: none
   }
 `;
 export const NavItem = styled.div`
@@ -65,7 +69,6 @@ export const NavItem = styled.div`
   .logIn{
     color: #969696;
   }
-  
 `;
 export const NavSearch = styled.input`
   padding: 0 40px 0 20px;
@@ -101,7 +104,7 @@ export const Span = styled.span`
 `;
 export const SearchInfo = styled.div`
   position:absolute;
-  left:223px;
+  left:93px;
   top:56px;
   width:210px;
   padding: 0 20px;
@@ -215,4 +218,5 @@ export const Button = styled.div`
 export const Name = styled.span`
   position:relative;
   left:70px;
+  color:#ea6f5a
 `;

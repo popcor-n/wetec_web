@@ -18,15 +18,12 @@ export const setTitle = (value)=> ({
 export const publish = (type,chos,title,content,user) => {
     return(dispatch)=> {
         var formData = new FormData();
-        formData.append("board",'ARTICLE');
-        formData.append("classification",type.get(chos));
+        formData.append("tag",type.get(chos));
         formData.append("content", content);
         formData.append("title",title);
-        formData.append("userId",user);
-        console.log(formData);
-        axios.post('/xuptbbs/post',formData).then((res)=> {
-            console.log(res);
-            if(res.data.code === 0){
+        formData.append("token",user);
+        axios.post('http://47.94.91.9:8080/article/putarticle',formData).then((res)=> {
+            if(res.data.status === 'success'){
                 alert('发布成功');
             }else{
                 alert('发布失败');

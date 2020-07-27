@@ -3,9 +3,10 @@ import { fromJS } from 'immutable'
 const defaultState = fromJS({
     focused:false,//是否聚焦input
     mouseIn:false,
-    list:[],//推荐搜索里的数据
+    list:['前端','后台', 'Js', 'Java', 'C++'],//推荐搜索里的数据
     page:1,//当前页数
-    totalPage:1//总页数
+    totalPage:1,//总页数
+    searchContent: ''
 })
 export const HeadReducer = (state = defaultState , action) => {
     switch (action.type) {
@@ -25,6 +26,8 @@ export const HeadReducer = (state = defaultState , action) => {
             }else{
                 return state.set('page', 1);
             }
+        case constants.SET_CONTENT:
+            return state.set('searchContent', action.data)
         default:
             return state;
     }

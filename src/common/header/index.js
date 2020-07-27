@@ -4,6 +4,7 @@ import { connect } from  'react-redux'
 import *as actionCreator from './store/actionCreator'
 import * as LoginAction  from '../../pages/login/store/actionCreator'
 import * as WriteAction  from '../../pages/write/store/actionCreator'
+import * as searchAction  from '../../pages/search/store/actionCreator'
 import { Link } from 'react-router-dom'
 import { 
     HeaderWrapper,
@@ -17,6 +18,9 @@ import {
     } from './style'
 
 class Header extends Component {
+    upDate() {
+        this.forceUpdate()
+    }
     componentWillMount(){
         if(document.cookie){
             // const cookieList = JSON.parse(document.cookie);
@@ -26,20 +30,21 @@ class Header extends Component {
                 let arr = i.split("=");
                 cookieObj[arr[0]]=arr[1];
             });
-            console.log(cookieObj);
+            // console.log(cookieObj);
             this.props.setCookie(cookieObj);
         }
         
     }
     render(){
     
-        const { mouseIn, page, list, focused, isLogin, userName, handleLogOut, handleSearchBlur, handleSearchFocus, handleChangeShow, handleMouseIn, handleMouseOut, handleIsLogin } = this.props;
+        const {isIn, changeSearchValue, handleSearch, handelConChange, searchContent, mouseIn, page, list, focused, isLogin, userName, handleLogOut, handleSearchBlur, handleSearchFocus, handleChangeShow, handleMouseIn, handleMouseOut, handleIsLogin, personEmail } = this.props;
         return (
             <HeaderWrapper>
                 <Link to= '/'><Logo /></Link>
                 <Nav>
+                    <Link to= '/'>
                     <NavItem className= 'left col'>首页</NavItem>
-                    <NavItem className= 'left'>下载APP</NavItem>
+                    </Link>
                     <CSSTransition
                         in= {focused}
                         timeout= {200}
@@ -50,9 +55,21 @@ class Header extends Component {
                             placeholder= '搜索'
                             onClick= {() => handleSearchFocus(list)}
                             onBlur= {handleSearchBlur}
+                            value= {searchContent}
+                            onChange={handelConChange}
+                            style= {{display: !isIn ? 'inline-block': 'none'}}
                         />
                     </CSSTransition>
-                    <Span className={focused ? 'focused iconfont' :'iconfont'} >&#xe645;</Span>
+                    <Link to= {`/searchTitle/${searchContent}`}
+                        style= {{display: !isIn ? 'inline-block': 'none'}}
+                        
+                    >
+                        <Span 
+                            // onClick= {()=>changeSearchValue(searchContent)}
+                            onClick={this.upDate.bind(this)}
+                            className={focused ? 'focused iconfont' :'iconfont'} >&#xe645;
+                        </Span>
+                    </Link>
                     <SearchInfo
                     style = {{display: focused||mouseIn ? 'block' : 'none'}}
                     onMouseEnter = {handleMouseIn}
@@ -77,7 +94,7 @@ class Header extends Component {
                 </SearchInfo>
 
                     <NavItem className= 'right login'>
-                        { handleIsLogin(isLogin, userName, handleLogOut) }
+                        { handleIsLogin(isLogin, userName, handleLogOut, personEmail) }
                     </NavItem>
                 </Nav>
                 <HeadRight>
@@ -103,16 +120,19 @@ const mapStateToProps = (state) =>{
         list:state.get('header').get('list'),
         page:state.get('header').get('page'),
         mouseIn:state.get('header').get('mouseIn'),
+        searchContent: state.getIn(['header', 'searchContent']),
         isLogin:state.getIn(['login', 'login']),
-        userName:state.getIn(['login', 'name'])
+        userName:state.getIn(['login', 'name']),
+        personEmail: state.getIn(['person', 'userEmail']),
+        isIn: state.getIn(['search', 'isIn'])
     }
 }
 const mapDispatchToProps = (dispatch) => ({
     handleSearchFocus(list){
         dispatch ( actionCreator.FocusIp());
-        if(list.size === 0){
-            dispatch( actionCreator.getHotList() );
-        }
+        // if(list.size === 0){
+        //     dispatch( actionCreator.getHotList() );
+        // }
     },
     handleSearchBlur() {
         dispatch ( actionCreator.BlurIp() );
@@ -133,16 +153,31 @@ const mapDispatchToProps = (dispatch) => ({
     handleLogOut(){
         dispatch( LoginAction.changeLogState() );
         dispatch( WriteAction.clearContent() );
+        // window.localStorage.clear()
     },
     setCookie(cookieList){
         dispatch( LoginAction.changeLogState(cookieList.name, cookieList.id) );     
     },
-    handleIsLogin(isLogin,userName,handleLogOut) {
+    handleIsLogin(isLogin,userName,handleLogOut, personEmail) {
         if(isLogin){
+            if(personEmail === window.localStorage.getItem('useremail')) {
+                return (
+                    <div>
+                        <span className= 'logOut' onClick= {handleLogOut}>退出登录</span>
+                        <Link to= {`/person/${window.localStorage.getItem('useremail')}`}>
+                            <Name 
+                            // onClick= {handleLogOut}
+                            >{userName}</Name>    
+                        </Link>  
+                    </div>
+                )
+            }
             return(
+                <Link to= {`/person/${window.localStorage.getItem('useremail')}`}>
                 <Name 
-                onClick= {handleLogOut}
+                // onClick= {handleLogOut}
                 >{userName}</Name>                
+                </Link>            
             )
         }else{
             return(
@@ -153,6 +188,15 @@ const mapDispatchToProps = (dispatch) => ({
             
             )
         }
+    },
+    handelConChange(e) {
+        dispatch (actionCreator.setContent(e.target.value))
+    },
+    changeSearchValue(value) {
+        console.log('in')
+        // dispatch(searchAction.setSearchValue(value))
+        this.upDate();
+        
     }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

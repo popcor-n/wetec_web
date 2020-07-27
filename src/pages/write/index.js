@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 import  * as action from './store/actionCreator'
 import * as style from './style'
-
+import * as LoginAction  from '../login/store/actionCreator'
 import E from 'wangeditor'
 class Write extends Component {
     constructor(){
@@ -18,7 +18,7 @@ class Write extends Component {
             return (
                 <style.WriteWrapper>
                     <style.WriteLeft>
-                    <Link to = '/'>                    
+                    <Link to = './'>                    
                         <style.WriteBack>
                             回到首页
                         </style.WriteBack>
@@ -56,7 +56,7 @@ class Write extends Component {
             )
             
         }else{
-            return <Redirect to= '/login' />
+            return <Redirect to= './login' />
         }
         
     }
@@ -98,6 +98,10 @@ class Write extends Component {
             editor.customConfig.uploadImgShowBase64 = true
             editor.create();
             editor.txt.html(this.props.content);
+        } else {
+            if(window.localStorage.getItem('userName')) {
+                this.props.doGetLog(window.localStorage.getItem('userName'), window.localStorage.getItem('userToken'), window.localStorage.getItem('useremail'));
+            }
         }
     };
 
@@ -132,12 +136,13 @@ const mapDispatchToProps = (dispatch) => ({
     publishArticle:(type,chos,title,content,user)=> {
         if(type && chos && title && content && user){
             dispatch(action.publish(type,chos,title,content,user));
-            console.log(type,chos,title,content,user);
         }
         else
             alert('需要补充文章必填内容哦');
-            console.log(type,chos,title,content,user);
             
+    },
+    doGetLog(name, id, email) {
+        dispatch( LoginAction.changeLogState(name, id, email))
     }
 })
  

@@ -2,32 +2,52 @@ import React, { Component } from 'react'
 import * as style from './style'
 import Swiper from './components/swiper'
 import List from './components/List'
-import Recommend from './components/Recommend'
-import Writer from './components/Writers'
 import { connect } from 'react-redux'
 import { getHomeDt, getMoreList } from './store/actionCreator'
+import ParticlesBg from 'particles-bg'
+import * as LoginAction  from '../login/store/actionCreator'
+import NameList from './components/NameList';
+
 class Home extends Component {
-    state= {
-        codeType:true
+    constructor(props) {
+        super(props);
+        this.state = {
+            codeType:true
+        }
+        this.bindHandleScroll = this.bindHandleScroll.bind(this)
     }
+    // state= {
+    //     codeType:true
+    // }
     render() {
         return (
-            <style.HomeWrapper>
+            <style.HomeWrapper ref='homeWrapper'>
                 <style.HomeLeft>
                     <Swiper />
                     <List />
                 </style.HomeLeft>
                 <style.HomeRight>
-                    <Recommend />
-                    <Writer/>
+                    <NameList />
+                    {/* <Recommend />
+                    <Writer/> */}
                 </style.HomeRight>
+                <ParticlesBg type="line" bg={true} />
             </style.HomeWrapper>
         )
     }
     componentDidMount() {
         // 发送请求数据action
         this.props.changeHomeDt(this.props.articleList);
-        window.addEventListener('scroll', this.bindHandleScroll.bind(this))
+        window.addEventListener('scroll', this.bindHandleScroll)
+        if(!this.props.islogin) {
+            if(window.localStorage.getItem('userName')) {
+                this.props.doGetLog(window.localStorage.getItem('userName'), window.localStorage.getItem('userToken'), window.localStorage.getItem('useremail'));
+            }
+        }
+        this.refs.homeWrapper.lastChild.style.position = 'fixed';
+    }
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.bindHandleScroll);
     }
     bindHandleScroll(event) {
         // 滚动的高度
@@ -43,7 +63,6 @@ class Home extends Component {
             // 判断执行回调条件
             if (this.state.codeType) {
                 // 执行回调
-                console.log('heihei');
                 this.props.clickMore(this.props.listPage)
                 // 关闭判断执行开关
                 this.setState(
@@ -68,17 +87,20 @@ const mapStateToProps = (state) =>({
     articleList: state.getIn(['home', 'articleList']),
     recommend: state.getIn(['home', 'recommend']),
     qrCodeShow: state.getIn(['home', 'qrCodeShow']),
-    writer:state.getIn(['home', 'writer'])
+    writer:state.getIn(['home', 'writer']),
+    islogin: state.getIn(['login', 'login']),
 })
 const mapDispatch = (dispatch) =>({
     changeHomeDt(articleList) {
-        console.log(articleList.size);
         if(!articleList.size){
             dispatch(getHomeDt());
         }
     },
     clickMore(page) {
         dispatch(getMoreList(page));
+    },
+    doGetLog(name, id, email) {
+        dispatch( LoginAction.changeLogState(name, id, email))
     }
 })
 export default connect(mapStateToProps, mapDispatch)(Home)

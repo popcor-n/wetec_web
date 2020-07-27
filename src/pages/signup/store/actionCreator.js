@@ -5,7 +5,7 @@ export const getCode = (number)=> {
     return(dispatch)=> {
         const reg = /^[A-Za-z0-9]+([_.][A-Za-z0-9]+)*@([A-Za-z0-9-]+.)+[A-Za-z]{2,6}$/;
         if(reg.test(number)){
-            axios.get(`/xuptbbs/code/${number}`).then((data)=> {
+            axios.get(`http://47.94.91.9:8080/mail/getCheckCode?email=${number}`).then((data)=> {
                 console.log(data);
             })
         }else{
@@ -18,24 +18,26 @@ export const signUp = (code, email, nick, pass,)=>{
     return(dispatch)=> {
         const data = {
             "code": code,
-            "email": email,
-            "nickname": nick,
+            "useremail": email,
+            "username": nick,
             "password":pass 
         };
         const reg = /^[A-Za-z0-9]+([_.][A-Za-z0-9]+)*@([A-Za-z0-9-]+.)+[A-Za-z]{2,6}$/;
         if(!reg.test(email)){
             alert('请填写合法邮箱地址');
         }else{
-            axios.post('/xuptbbs/entrance/register',data).then((data)=> {
-                if(data.data.code !== 0) {
-                    alert('好像哪里出了问题');
+            axios.post('http://47.94.91.9:8080/user/register',data).then((res)=> {
+                console.log(res)
+                if(res.data.status !== 'success') {
+                    if(res.data.data.errCode === 10001) {
+                        alert('该邮箱已经注册')
+                    }else
+                        alert('好像哪里出了问题');
                 }else{
                     alert('注册成功啦');
                     dispatch(loginAction.changeLogState(nick));
                 }
             })
-            console.log(data);
-            
         }
        
     }

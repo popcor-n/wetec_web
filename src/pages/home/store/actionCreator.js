@@ -18,12 +18,8 @@ export const QRdown = () =>({
 //获取首页信息 
 export const getHomeDt= () => {
     return (dispatch) => {
-        axios.get('http://localhost:3000/api/homeData.json').then((res) => {
+        axios.get('http://47.94.91.9:8080/article/gettextlistbytime?pagenum=1&pagesize=3').then((res)=> {
             const result = res.data.data;
-            dispatch(setHomeDt(result));
-        })
-        axios.get(`/xuptbbs/post?board=ARTICLE&page=1&per_page=5`).then((res)=> {
-            const result = res.data.content;
             console.log(result);
             result.forEach(element => {
                 const reg1=/<\s*img\s+[^>]*?src\s*=\s*(\'|\")(.*?)\1[^>]*?\/?\s*>/;
@@ -32,9 +28,8 @@ export const getHomeDt= () => {
                 const reg=/<\/?.+?\/?>/g;
                 element.content = element.content.replace(reg,'').replace(/&nbsp;/g,' ');
                 if(element.content.length > 40) {
-                    element.content= element.content.slice(0, 40)+'...';
+                    element.content= element.content.slice(0, 60)+'...';
                 }
-                
             });
 
         
@@ -59,8 +54,8 @@ export const setHomeList = (result) => ({
 //获取更多文章
 export const getMoreList= (page) => {
     return (dispatch) => {
-        axios.get(`/xuptbbs/post?board=ARTICLE&page=${page+1}&per_page=5`).then((res) => {
-            const result = res.data.content;
+        axios.get(`http://47.94.91.9:8080/article/gettextlistbytime?pagenum=${++page}&pagesize=3`).then((res) => {
+            const result = res.data.data;
             console.log(result);
             result.forEach(element => {
                 const reg1=/<\s*img\s+[^>]*?src\s*=\s*(\'|\")(.*?)\1[^>]*?\/?\s*>/;
@@ -73,7 +68,10 @@ export const getMoreList= (page) => {
                 }
                 
             });
-            dispatch(addList(result, page + 1));
+            if(JSON.stringify(result) !== '[]'){
+                dispatch(addList(result, page));          
+            }
+
         })
     }
 }

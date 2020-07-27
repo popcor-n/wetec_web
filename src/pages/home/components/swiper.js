@@ -3,6 +3,7 @@ import 'swiper/dist/css/swiper.min.css'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { MouseIn, MouseOut } from '../store/actionCreator'
+import * as style from '../style'
 class MySwiper extends Component {
     render() {
         const { show, swiper, handleMouseEnter, handleMouseLeave } = this.props;
@@ -12,11 +13,11 @@ class MySwiper extends Component {
                 onMouseLeave = {handleMouseLeave}
             >
                 <div className="swiper-container">
-                    <div className="swiper-wrapper" >
+                    <style.Wrapper className="swiper-wrapper" >
                         {swiper.map((item, index) =>{
-                            return(<img key= {index} className="swiper-slide" src= {item} alt= ""/>)
+                            return(<div key= {index} id={`swiper${index+1}`} className="swiper-slide"  alt= ""/>)
                         })}
-                    </div>
+                    </style.Wrapper>
                     <div className="swiper-button-prev swiper-button-white" style= {{display:show ? 'block' :'none'}}></div>
                     <div className="swiper-button-next swiper-button-white" style= {{display:show ? 'block' :'none'}}></div>
                     <div className='swiper-pagination'></div>

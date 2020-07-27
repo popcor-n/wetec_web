@@ -10,19 +10,19 @@ class Login extends Component {
             return (
                 <style.LoginWrapper>
                     <style.Logo>
-                        <Link to= '/'>
+                        <Link to= './'>
                             <style.LogoPic />
                         </Link>
                  </style.Logo>
                     <style.Main>
                         <h4 className='title'>
-                            <Link to= '/login' className='active'>登录</Link>
+                            <Link to= './login' className='active'>登录</Link>
                             <b>.</b>
-                            <Link className='signup' to= '/signup'>注册</Link>
+                            <Link className='signup' to= './signup'>注册</Link>
                         </h4>
                         <style.Input>
                             <span className="iconfont">&#xe6e6;</span>
-                            <input placeholder='昵称或邮箱' type= 'text' id='number' ref= {(input) => {this.number = input}} / >
+                            <input placeholder='邮箱' type= 'text' id='number' ref= {(input) => {this.number = input}} / >
                         </style.Input>
                         <style.Input>
                             <span className="iconfont">&#xe620;</span>                    
@@ -35,7 +35,7 @@ class Login extends Component {
                 </style.LoginWrapper>
             )
         }else{
-            return <Redirect to= '/' />
+            return <Redirect to= './' />
         }
         
     }

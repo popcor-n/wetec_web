@@ -2,62 +2,80 @@ import React, { Component } from 'react'
 import * as style from './style'
 import { connect } from 'react-redux'
 import * as action from './store/actionCreator'
+import * as LoginAction  from '../../pages/login/store/actionCreator'
 import { withRouter } from 'react-router-dom'
+import ParticlesBg from 'particles-bg'
+import { Link } from 'react-router-dom'
+
 class Detail extends Component {
-    state = {
-        codeType:true
-    }
     render() {
-        const { title, content, isLike, likeCount, handleIsLike,author, clickLike, userId, id } = this.props;
+        const { title, content, isLike, likeCount, handleIsLike,author, clickLike, userId, id, handleComFocus, cancelComFocus, isFocus, thisCom, handleComChange, handlePublishCom, getComList, comList, personName, email } = this.props;
         return (
             <div>
-                <style.DetailWrapper>
+                <style.DetailWrapper  ref= 'canvas'>
                     <style.Header>{title}</style.Header>
+                    <Link to= {`/person/${email}`}>
+                        <style.Author>{personName}</style.Author>
+                    </Link>
+                    {/* <style.author>{author}</style.author> */}
                     <style.Content dangerouslySetInnerHTML= {{__html:content}} />
-                    <style.LikeBox>
-                        {`${likeCount}人点赞`}
-                        {handleIsLike(isLike,clickLike,author, userId, id, title)}
-                    </style.LikeBox>
+                    <style.comList>
+                        <h3>- 评论列表</h3>
+                        {
+                            comList.map((item, index) => {
+                                return (
+                                    <div key= 'index' className= 'listItem'>
+                                        <p>{item.commentName + '   .   ' + item.commentPublcTime.slice(0, 10)}</p>
+                                        <div>{item.commentContext}</div>
+                                    </div>
+                                )
+                            })
+                        }
+
+                    </style.comList>
+                    <ParticlesBg type="cobweb" bg={true}/>
                 </style.DetailWrapper>
+                <style.bottom>
+                    <style.bottomInner>
+                        <style.ipWrapper 
+                            className= {isFocus ? 'focused' : ''}
+                        >
+                            <style.textArea placeholder= '请输入评论'
+                                className= {isFocus ? 'focused' : ''}
+                                onClick= {()=> handleComFocus(isFocus)}  
+                                onChange= {handleComChange}
+                                value= {thisCom}
+                            ></style.textArea>
+                            <style.comChoBox
+                            >
+                                <button className= 'publish'
+                                    onClick = {() => handlePublishCom(thisCom, id, userId)}
+                                >发布</button>
+                                <button className= 'cancel'
+                                    onClick = {cancelComFocus}
+                                >取消</button>
+                            </style.comChoBox>
+                        </style.ipWrapper>
+                        <style.LikeBox>
+                            {`${likeCount}人点赞`}
+                            {handleIsLike(isLike,clickLike,author, userId, id, title)}
+                        </style.LikeBox>
+                    </style.bottomInner>       
+                </style.bottom>
             </div>
         )
     }
     componentDidMount() {
         this.props.getDetail(this.props.match.params.id, this.props.userId);
-        window.addEventListener('scroll', this.bindHandleScroll.bind(this))
-    }
-    bindHandleScroll(event) {
-        // 滚动的高度
-        const scrollTop = (event.srcElement ? event.srcElement.documentElement.scrollTop : false) || window.pageYOffset || (event.srcElement ? event.srcElement.body.scrollTop : 0);
-        // 视窗高度
-        const clientHeight = (event.srcElement && event.srcElement.documentElement.clientHeight) || document.body.clientHeight;
-        // 页面高度
-        const scrollHeight = (event.srcElement && event.srcElement.documentElement.scrollHeight) || document.body.scrollHeight;
-        // 距离页面底部的高度
-        const height = scrollHeight - scrollTop - clientHeight;
-        // 判断距离页面底部的高度
-        if (height <= (50 || 0)) {
-            // 判断执行回调条件
-            if (this.state.codeType) {
-                // 执行回调
-                console.log('heihei');
-                // 关闭判断执行开关
-                this.setState(
-                    {
-                        codeType: false,
-                    }
-                );
+        this.refs.canvas.lastChild.style.position = 'fixed'
+        // this.refs.canvas.lastChild.style.left = '25%'
+        this.props.getComList(this.props.match.params.id)
+        if(!this.props.islogin) {
+            if(window.localStorage.getItem('userName')) {
+                this.props.doGetLog(window.localStorage.getItem('userName'), window.localStorage.getItem('userToken'), window.localStorage.getItem('useremail'));
             }
-        
-        } else {
-            // 打开判断执行开关
-            this.setState({
-                codeType: true
-            });
         }
     }
-
-
 }
 const mapStateToProps = (state) => ({
     id:state.getIn(['detail', 'id']),
@@ -66,7 +84,13 @@ const mapStateToProps = (state) => ({
     content: state.getIn(['detail', 'content']),
     isLike: state.getIn(['detail', 'isLike']),
     likeCount: state.getIn(['detail', 'likeCount']),
-    userId:state.getIn(['login', 'id'])
+    isFocus: state.getIn(['detail', 'comFocused']),
+    userId:state.getIn(['login', 'id']),
+    thisCom: state.getIn(['detail', 'thisCom']),
+    comList: state.getIn(['detail', 'comList']),
+    islogin: state.getIn(['login', 'login']),
+    personName: state.getIn(['detail', 'personName']),
+    email:state.getIn(['detail', 'email'])
 })
 const mapDispatchToProps = (dispatch) => ({
     getDetail(id, user){
@@ -84,9 +108,26 @@ const mapDispatchToProps = (dispatch) => ({
         }
     },
     clickLike(isLike,author, userId, id, title){
-        console.log(isLike);
-        dispatch(action.handleLike(isLike, author, userId, id, title))
+        dispatch(action.handleLike(isLike, userId, id))
         // dispatch(action.changeLike(isLike));
+    },
+    handleComFocus(isFocus) {
+        dispatch(action.handleComFocus(isFocus))
+    },
+    cancelComFocus() {
+        dispatch(action.cancelComFocus())
+    },
+    handleComChange(e) {
+        dispatch(action.setCom(e.target.value))
+    },
+    handlePublishCom(com, id, userId) {
+        dispatch(action.publishCom(com, id, userId))
+    },
+    getComList(id) {
+        dispatch(action.getComList(id))
+    },
+    doGetLog(name, id, email) {
+        dispatch( LoginAction.changeLogState(name, id, email))
     }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Detail));

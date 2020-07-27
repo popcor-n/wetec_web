@@ -4,7 +4,8 @@ import * as constants from './constants'
 const defaultState = fromJS({
     login:false,
     name:'',
-    id:''
+    id:'',
+    email: ''
 })
 export const LoginReducer = (state = defaultState, action) => {
     switch (action.type) {
@@ -13,15 +14,17 @@ export const LoginReducer = (state = defaultState, action) => {
                return state.merge({
                    'login': false,
                    'name':'',
-                   'id':''
+                   'id':'',
+                   email: ''
                 })
             }else return state.merge({
                 'login': true,
                 'name': action.name,
-                'id':action.id
+                'id':action.id,
+                'email': action.email
             });
-        // case constants.SetUserId:
-        //     return state.set('id', action.id);
+        case constants.SetUserId:
+            return state.set('name', action.id);
         default:
             return state
     }

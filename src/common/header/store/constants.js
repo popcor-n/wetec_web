@@ -4,3 +4,4 @@ export const CHANGE_LIST = 'header_change_list';
 export const CHANGE_SHOW = 'header_change_show';
 export const MOUSE_IN = 'header_mouse_in';
 export const MOUSE_OUT = 'header_mouse_out';
+export const SET_CONTENT = 'header_set_content'

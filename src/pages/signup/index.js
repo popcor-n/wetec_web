@@ -47,7 +47,7 @@ class Signup extends Component {
                         </style.Input>
                         <style.Input>
                             <span className="iconfont">&#xe620;</span>
-                            <input placeholder='密码' type='text' id='password' 
+                            <input placeholder='密码' type='password' id='password' 
                                 onChange={handlePassChange}
                              />
                         </style.Input>

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import logoPic from '../../static/logo1.png'
+import logoPic from '../../static/logo.png'
 export const LoginWrapper = styled.div`
   position:absolute;
   left:0;
@@ -15,10 +15,10 @@ export const Logo = styled.div`
   margin-left: 50px;
 `;
 export const LogoPic = styled.div`
-  width:100px;
+  width:400px;
   background-image:url(${logoPic});
   height:46px;
-  background-size:100px 46px
+  background-size:400px;
 `;
 export const Main = styled.div`
     width: 400px;
@@ -31,7 +31,8 @@ export const Main = styled.div`
     display: inline-block;
     box-sizing: border-box;
     a{
-        text-decoration:none
+        text-decoration:none;
+        color:#888
     }
     .title{
         margin: 0 auto 50px;

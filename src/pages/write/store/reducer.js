@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable'
 import * as constants from './constants'
 const defaultState = fromJS({
-    typeList:['web前端','java后台','产品测试','产品运营','其他相关'],
+    typeList:['前端','后台','Java','Js','C++'],
     chosedItem:'',
     title:'',
     content:''

@@ -2,21 +2,22 @@
     "state":1,
     "data":[
         {
-            "title":"Sportcastr | 1个月薅4万美金教程",
+            "title":"Sportcastr | 4个月薅4万美金教程",
             "content":"Sportcastr近期正式推出网页应用，录直播就可以获得Fanz奖励，据说月浏览量9的视频博主竟然获得了近万元的奖励，这个活动推出后，后台不时...",
             "imgUrl":"http://upload-images.jianshu.io/upload_images/11929545-b665d75ce8a535c7?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240",
             "id": 4
         },
         {
-            "title":"Sportcastr | 1个月薅5万美金教程",
+            "title":"Sportcastr | 5个月薅5万美金教程",
             "content":"Sportcastr近期正式推出网页应用，录直播就可以获得Fanz奖励，据说月浏览量9的视频博主竟然获得了近万元的奖励，这个活动推出后，后台不时...",
             "imgUrl":"http://upload-images.jianshu.io/upload_images/11929545-b665d75ce8a535c7?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240",
             "id": 5
         },
         {
-            "title":"Sportcastr | 1个月薅6万美金教程",
+            "title":"Sportcastr | 6个月薅6万美金教程",
             "content":"Sportcastr近期正式推出网页应用，录直播就可以获得Fanz奖励，据说月浏览量9的视频博主竟然获得了近万元的奖励，这个活动推出后，后台不时...",
             "imgUrl":"http://upload-images.jianshu.io/upload_images/11929545-b665d75ce8a535c7?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240",
-            "id": 6       }
+            "id": 6      
+        }
     ]
 }
